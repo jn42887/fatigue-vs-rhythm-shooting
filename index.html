@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fatigue vs. Rhythm in Three-Point Shooting</title>
+    <!-- Load Tailwind CSS from CDN for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Chart.js from CDN for creating data visualizations -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Preconnect to Google Fonts for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Load the Inter font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         body {
@@ -58,7 +62,7 @@
                             <p class="text-gray-600">Research shows that severe fatigue leads to a measurable decrease in wrist and elbow angular velocity, critical components for the power and precision needed for three-pointers.</p>
                         </div>
                         <div class="stat-card border-l-4 border-[#FFA600]">
-                             <h3 class="text-xl font-bold text-[#FF764A] mb-2">Cognitive Decline</h3>
+                            <h3 class="text-xl font-bold text-[#FF764A] mb-2">Cognitive Decline</h3>
                             <p class="text-gray-600">Mental fatigue impairs concentration and judgment, leading to unstable shooting motions and poor shot selection, even affecting free-throw accuracy.</p>
                         </div>
                     </div>
@@ -102,7 +106,7 @@
             </section>
 
             <section id="clutch-reality">
-                 <div class="stat-card">
+                <div class="stat-card">
                     <h2 class="text-2xl font-bold text-center text-[#003F5C] mb-2">Clutch Time Reality Check</h2>
                     <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">When the pressure is highest and fatigue is at its peak, shooting efficiency drops significantly. Based on league-wide data, the average three-point percentage drops noticeably in high-pressure "clutch time" moments.</p>
                     <div class="chart-container w-full max-w-sm h-80 md:h-96">
@@ -121,7 +125,7 @@
                             <p class="text-sm text-gray-600">Simulate game-like fatigue in practice to build players' resilience and help them maintain proper shooting form under duress.</p>
                         </div>
                         <div class="text-2xl text-[#374C80] font-bold hidden md:block">&rarr;</div>
-                         <div class="text-2xl text-[#374C80] font-bold md:hidden">&darr;</div>
+                        <div class="text-2xl text-[#374C80] font-bold md:hidden">&darr;</div>
                         <div class="stat-card flex-1 text-center">
                             <div class="text-4xl mb-2">🔄</div>
                             <h3 class="font-bold text-[#BC5090]">Strategic Rotations</h3>
@@ -151,205 +155,210 @@
                 </div>
             </section>
         </main>
-
     </div>
 
     <script>
-        const brilliantBlues = {
-            darkBlue: '#003F5C',
-            indigo: '#374C80',
-            purple: '#7A5195',
-            magenta: '#BC5090',
-            pink: '#EF5675',
-            orange: '#FF764A',
-            yellow: '#FFA600',
-            lightBg: '#f0f4f8',
-            textDark: '#2d3748',
-            textLight: '#4a5568'
-        };
+        // Use a window.onload event to ensure all elements are ready before we try to create the charts
+        window.onload = function() {
+            // Colors and chart options from your original code
+            const brilliantBlues = {
+                darkBlue: '#003F5C',
+                indigo: '#374C80',
+                purple: '#7A5195',
+                magenta: '#BC5090',
+                pink: '#EF5675',
+                orange: '#FF764A',
+                yellow: '#FFA600',
+                lightBg: '#f0f4f8',
+                textDark: '#2d3748',
+                textLight: '#4a5568'
+            };
 
-        const globalChartOptions = {
-            maintainAspectRatio: false,
-            responsive: true,
-            plugins: {
-                legend: {
-                    labels: {
-                        color: brilliantBlues.textDark,
-                        font: {
-                            size: 14,
-                            family: 'Inter, sans-serif'
+            const globalChartOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: brilliantBlues.textDark,
+                            font: {
+                                size: 14,
+                                family: 'Inter, sans-serif'
+                            }
+                        }
+                    },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: 'rgba(0, 63, 92, 0.9)',
+                        titleFont: { size: 16, family: 'Inter, sans-serif', weight: 'bold' },
+                        bodyFont: { size: 14, family: 'Inter, sans-serif' },
+                        padding: 12,
+                        cornerRadius: 8,
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                    return label.join(' ');
+                                } else {
+                                    return label;
+                                }
+                            }
                         }
                     }
                 },
-                tooltip: {
-                    enabled: true,
-                    backgroundColor: 'rgba(0, 63, 92, 0.9)',
-                    titleFont: { size: 16, family: 'Inter, sans-serif', weight: 'bold' },
-                    bodyFont: { size: 14, family: 'Inter, sans-serif' },
-                    padding: 12,
-                    cornerRadius: 8,
-                    callbacks: {
-                        title: function(tooltipItems) {
-                            const item = tooltipItems[0];
-                            let label = item.chart.data.labels[item.dataIndex];
-                            if (Array.isArray(label)) {
-                              return label.join(' ');
-                            } else {
-                              return label;
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#e2e8f0'
+                        },
+                        ticks: {
+                            color: brilliantBlues.textLight,
+                            font: {
+                                size: 12,
+                                family: 'Inter, sans-serif'
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: brilliantBlues.textLight,
+                            font: {
+                                size: 12,
+                                family: 'Inter, sans-serif'
                             }
                         }
                     }
                 }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: '#e2e8f0'
+            };
+            
+            function wrapLabel(str, maxWidth) {
+                if (str.length <= maxWidth) {
+                    return str;
+                }
+                const words = str.split(' ');
+                let lines = [];
+                let currentLine = '';
+                for (const word of words) {
+                    if ((currentLine + word).length > maxWidth) {
+                        lines.push(currentLine.trim());
+                        currentLine = '';
+                    }
+                    currentLine += word + ' ';
+                }
+                lines.push(currentLine.trim());
+                return lines.filter(line => line.length > 0);
+            }
+
+            // Create Fatigue Impact Chart
+            const fatigueImpactCtx = document.getElementById('fatigueImpactChart').getContext('2d');
+            const fatigueImpactData = {
+                labels: [wrapLabel('3-Point Field Goal %', 16), wrapLabel('2-Point Field Goal %', 16)],
+                datasets: [
+                    {
+                        label: 'Start of Game',
+                        data: [37, 49],
+                        backgroundColor: brilliantBlues.purple,
                     },
-                    ticks: {
-                        color: brilliantBlues.textLight,
-                        font: {
-                            size: 12,
-                            family: 'Inter, sans-serif'
+                    {
+                        label: 'End of Game',
+                        data: [34, 47],
+                        backgroundColor: brilliantBlues.orange,
+                    }
+                ]
+            };
+            new Chart(fatigueImpactCtx, {
+                type: 'bar',
+                data: fatigueImpactData,
+                options: {
+                    ...globalChartOptions,
+                    scales: {
+                        y: {
+                            ...globalChartOptions.scales.y,
+                            max: 55,
+                            title: { display: true, text: 'Percentage', color: brilliantBlues.textLight }
+                        },
+                        x: {
+                            ...globalChartOptions.scales.x,
+                        }
+                    },
+                }
+            });
+
+            // Create Quarterly Decline Chart
+            const quarterlyDeclineCtx = document.getElementById('quarterlyDeclineChart').getContext('2d');
+            const quarterlyDeclineData = {
+                labels: ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4'],
+                datasets: [{
+                    label: 'Average Field Goal %',
+                    data: [47.5, 46.8, 46.2, 45.5],
+                    fill: true,
+                    backgroundColor: 'rgba(239, 86, 117, 0.2)',
+                    borderColor: brilliantBlues.pink,
+                    tension: 0.4,
+                    pointBackgroundColor: brilliantBlues.pink,
+                    pointRadius: 5,
+                    pointHoverRadius: 8
+                }]
+            };
+            new Chart(quarterlyDeclineCtx, {
+                type: 'line',
+                data: quarterlyDeclineData,
+                options: {
+                    ...globalChartOptions,
+                    scales: {
+                        y: {
+                            ...globalChartOptions.scales.y,
+                            min: 44,
+                            max: 48,
+                            title: { display: true, text: 'Field Goal Percentage', color: brilliantBlues.textLight }
+                        },
+                        x: { ...globalChartOptions.scales.x }
+                    },
+                    plugins: { ...globalChartOptions.plugins, legend: { display: false } }
+                }
+            });
+            
+            // Create Clutch Shooting Chart
+            const clutchShootingCtx = document.getElementById('clutchShootingChart').getContext('2d');
+            const clutchShootingData = {
+                labels: [wrapLabel('Normal 3-Point %', 16), wrapLabel('Clutch Time 3-Point %', 16)],
+                datasets: [{
+                    label: 'Average 3-Point Percentage',
+                    data: [36, 33],
+                    backgroundColor: [brilliantBlues.yellow, brilliantBlues.darkBlue],
+                    borderRadius: 5
+                }]
+            };
+            new Chart(clutchShootingCtx, {
+                type: 'bar',
+                data: clutchShootingData,
+                options: {
+                    ...globalChartOptions,
+                    scales: {
+                        y: {
+                            ...globalChartOptions.scales.y,
+                            min: 30,
+                            max: 40,
+                            title: { display: true, text: 'Percentage', color: brilliantBlues.textLight }
+                        },
+                        x: {
+                            ...globalChartOptions.scales.x,
+                        }
+                    },
+                    plugins: {
+                        ...globalChartOptions.plugins,
+                        legend: {
+                            display: false
                         }
                     }
-                },
-                x: {
-                    grid: {
-                        display: false
-                    },
-                    ticks: {
-                        color: brilliantBlues.textLight,
-                        font: {
-                            size: 12,
-                            family: 'Inter, sans-serif'
-                        }
-                    }
                 }
-            }
+            });
         };
-        
-        function wrapLabel(str, maxWidth) {
-            if (str.length <= maxWidth) {
-                return str;
-            }
-            const words = str.split(' ');
-            let lines = [];
-            let currentLine = '';
-            for (const word of words) {
-                if ((currentLine + word).length > maxWidth) {
-                    lines.push(currentLine.trim());
-                    currentLine = '';
-                }
-                currentLine += word + ' ';
-            }
-            lines.push(currentLine.trim());
-            return lines.filter(line => line.length > 0);
-        }
-
-        const fatigueImpactCtx = document.getElementById('fatigueImpactChart').getContext('2d');
-        const fatigueImpactData = {
-            labels: [wrapLabel('3-Point Field Goal %', 16), wrapLabel('2-Point Field Goal %', 16)],
-            datasets: [
-                {
-                    label: 'Start of Game',
-                    data: [37, 49],
-                    backgroundColor: brilliantBlues.purple,
-                },
-                {
-                    label: 'End of Game',
-                    data: [34, 47],
-                    backgroundColor: brilliantBlues.orange,
-                }
-            ]
-        };
-        new Chart(fatigueImpactCtx, {
-            type: 'bar',
-            data: fatigueImpactData,
-            options: {
-                ...globalChartOptions,
-                scales: {
-                    y: {
-                        ...globalChartOptions.scales.y,
-                        max: 55,
-                        title: { display: true, text: 'Percentage', color: brilliantBlues.textLight }
-                    },
-                    x: {
-                        ...globalChartOptions.scales.x,
-                    }
-                },
-            }
-        });
-
-        const quarterlyDeclineCtx = document.getElementById('quarterlyDeclineChart').getContext('2d');
-        const quarterlyDeclineData = {
-            labels: ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4'],
-            datasets: [{
-                label: 'Average Field Goal %',
-                data: [47.5, 46.8, 46.2, 45.5],
-                fill: true,
-                backgroundColor: 'rgba(239, 86, 117, 0.2)',
-                borderColor: brilliantBlues.pink,
-                tension: 0.4,
-                pointBackgroundColor: brilliantBlues.pink,
-                pointRadius: 5,
-                pointHoverRadius: 8
-            }]
-        };
-        new Chart(quarterlyDeclineCtx, {
-            type: 'line',
-            data: quarterlyDeclineData,
-            options: {
-                ...globalChartOptions,
-                scales: {
-                    y: {
-                        ...globalChartOptions.scales.y,
-                        min: 44,
-                        max: 48,
-                        title: { display: true, text: 'Field Goal Percentage', color: brilliantBlues.textLight }
-                    },
-                    x: { ...globalChartOptions.scales.x }
-                },
-                 plugins: { ...globalChartOptions.plugins, legend: { display: false } }
-            }
-        });
-        
-        const clutchShootingCtx = document.getElementById('clutchShootingChart').getContext('2d');
-        const clutchShootingData = {
-            labels: [wrapLabel('Normal 3-Point %', 16), wrapLabel('Clutch Time 3-Point %', 16)],
-            datasets: [{
-                label: 'Average 3-Point Percentage',
-                data: [36, 33],
-                backgroundColor: [brilliantBlues.yellow, brilliantBlues.darkBlue],
-                borderRadius: 5
-            }]
-        };
-        new Chart(clutchShootingCtx, {
-            type: 'bar',
-            data: clutchShootingData,
-            options: {
-                ...globalChartOptions,
-                scales: {
-                    y: {
-                        ...globalChartOptions.scales.y,
-                        min: 30,
-                        max: 40,
-                        title: { display: true, text: 'Percentage', color: brilliantBlues.textLight }
-                    },
-                    x: {
-                        ...globalChartOptions.scales.x,
-                    }
-                },
-                plugins: {
-                    ...globalChartOptions.plugins,
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        });
-
     </script>
 </body>
 </html>
