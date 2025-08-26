@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fatigue vs. Rhythm in Three-Point Shooting</title>
+    <!-- Load Tailwind CSS from CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Chart.js from CDN for creating data visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Preconnect to Google Fonts for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Load the Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .stat-card {
+            background-color: #ffffff;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #EF5675, #FFA600);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-6xl font-black text-[#003F5C] mb-2">Rhythm vs Fatigue in Three-Point Shooting</h1>
+            <p class="text-lg md:text-xl text-[#374C80] max-w-3xl mx-auto">Does time on the court create a shooter's rhythm or does fatigue take over? The data provides a clear winner.</p>
+        </header>
+
+        <main class="space-y-16">
+
+            <section id="fatigue-impact" class="text-center">
+                <div class="stat-card max-w-4xl mx-auto">
+                    <h2 class="text-2xl font-bold text-[#003F5C] mb-4">Fatigue is the Dominant Factor</h2>
+                    <p class="text-gray-600 mb-6">Across numerous studies, the physiological and mental toll of extended play consistently outweighs the elusive concept of being "in rhythm." As players fatigue, their mechanics and decision-making degrade, impacting their shooting.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="stat-card border-l-4 border-[#EF5675]">
+                            <h3 class="text-xl font-bold text-[#BC5090] mb-2">Biomechanical Breakdown</h3>
+                            <p class="text-gray-600">Research shows that severe fatigue leads to a measurable decrease in wrist and elbow angular velocity, critical components for the power and precision needed for three-pointers.</p>
+                        </div>
+                        <div class="stat-card border-l-4 border-[#FFA600]">
+                            <h3 class="text-xl font-bold text-[#FF764A] mb-2">Cognitive Decline</h3>
+                            <p class="text-gray-600">Mental fatigue impairs concentration and judgment, leading to unstable shooting motions and poor shot selection, even affecting free-throw accuracy.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="fatigue-comparison">
+                <div class="stat-card">
+                    <h2 class="text-2xl font-bold text-center text-[#003F5C] mb-2">Fatigue's Impact on Shooting</h2>
+                    <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">While all shooting is affected, the data suggests that long-range shots are more susceptible to the effects of fatigue, which requires a higher degree of fine motor control and power. This chart illustrates a typical drop in shooting percentages as fatigue sets in.</p>
+                    <div class="chart-container w-full max-w-2xl h-80 md:h-96">
+                        <canvas id="fatigueImpactChart"></canvas>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="game-progression">
+                <div class="stat-card">
+                    <h2 class="text-2xl font-bold text-center text-[#003F5C] mb-2">The Ticking Clock & Sinking Percentages</h2>
+                    <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">Analysis of play-by-play data reveals a consistent trend: shooting accuracy declines as the game progresses. Research has shown that shooting accuracy is highest in the first quarter and lowest in the final minutes of each quarter.</p>
+                    <div class="chart-container w-full max-w-4xl h-80 md:h-96">
+                        <canvas id="quarterlyDeclineChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="hot-hand-myth">
+                <h2 class="text-2xl font-bold text-center text-[#003F5C] mb-8">The "Hot Hand": A Real, but Complex Phenomenon</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="stat-card text-center">
+                        <div class="text-6xl mb-4">🎯</div>
+                        <h3 class="text-xl font-bold text-[#7A5195] mb-2">Proven in Controlled Settings</h3>
+                        <p class="text-gray-600">In fixed, repetitive environments like free throws or the 3-Point Contest, there is measurable evidence of the "hot hand." This effect is a fine-tuned motor program, not a magical skill.</p>
+                    </div>
+                    <div class="stat-card text-center">
+                        <div class="text-6xl mb-4">🏃‍♂️</div>
+                        <h3 class="text-xl font-bold text-[#BC5090] mb-2">Rare & Unreliable In-Game</h3>
+                        <p class="text-gray-600">During a live game, factors like defensive pressure, constant movement, and accumulating fatigue easily disrupt and override the fragile "hot hand" effect, making it statistically unreliable.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="clutch-reality">
+                <div class="stat-card">
+                    <h2 class="text-2xl font-bold text-center text-[#003F5C] mb-2">Clutch Time Reality Check</h2>
+                    <p class="text-center text-gray-600 mb-8 max-w-2xl mx-auto">When the pressure is highest and fatigue is at its peak, shooting efficiency drops significantly. Based on league-wide data, the average three-point percentage drops noticeably in high-pressure "clutch time" moments.</p>
+                    <div class="chart-container w-full max-w-sm h-80 md:h-96">
+                        <canvas id="clutchShootingChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="playbook">
+                <h2 class="text-2xl font-bold text-center text-[#003F5C] mb-8">The Modern Coach's Playbook</h2>
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-4">
+                        <div class="stat-card flex-1 text-center">
+                            <div class="text-4xl mb-2">🔬</div>
+                            <h3 class="font-bold text-[#7A5195]">Data-Driven Training</h3>
+                            <p class="text-sm text-gray-600">Simulate game-like fatigue in practice to build players' resilience and help them maintain proper shooting form under duress.</p>
+                        </div>
+                        <div class="text-2xl text-[#374C80] font-bold hidden md:block">&rarr;</div>
+                        <div class="text-2xl text-[#374C80] font-bold md:hidden">&darr;</div>
+                        <div class="stat-card flex-1 text-center">
+                            <div class="text-4xl mb-2">🔄</div>
+                            <h3 class="font-bold text-[#BC5090]">Strategic Rotations</h3>
+                            <p class="text-sm text-gray-600">Use substitutions and timeouts effectively to manage player load, especially at the end of quarters when accuracy is lowest.</p>
+                        </div>
+                        <div class="text-2xl text-[#374C80] font-bold hidden md:block">&rarr;</div>
+                        <div class="text-2xl text-[#374C80] font-bold md:hidden">&darr;</div>
+                        <div class="stat-card flex-1 text-center">
+                            <div class="text-4xl mb-2">🧠</div>
+                            <h3 class="font-bold text-[#EF5675]">Smarter Shot Selection</h3>
+                            <p class="text-sm text-gray-600">Emphasize high-percentage looks late in games, recognizing that fatigue makes hero-ball three-pointers even less efficient.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="data-sources" class="text-center mt-16">
+                <div class="stat-card max-w-4xl mx-auto">
+                    <h2 class="text-2xl font-bold text-[#003F5C] mb-4">Data Sources & Research</h2>
+                    <p class="text-gray-600 mb-6">This infographic is grounded in findings from the following research and sports analytics data:</p>
+                    <ul class="list-none space-y-2 text-left text-gray-700 max-w-2xl mx-auto">
+                        <li><a href="https://observablehq.com/@benjaminadk/the-nba-clutch-gene" class="text-blue-600 hover:underline" target="_blank">The NBA Clutch Gene</a> - An analysis showing the decline in clutch time shooting percentages.</li>
+                        <li><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2022.917980/full" class="text-blue-600 hover:underline" target="_blank">What are the changes in basketball shooting pattern and accuracy in National Basketball Association in the past decade?</a> - A study on shooting accuracy trends per quarter.</li>
+                        <li><a href="https://www.mdpi.com/2076-3417/14/20/9582" class="text-blue-600 hover:underline" target="_blank">Influence of Fatigue and Defensive Pressure on Three-Point Jump-Shot Kinematics in Basketball</a> - Research confirming the link between fatigue and altered shooting mechanics.</li>
+                        <li><a href="https://www.researchgate.net/publication/333142185_The_Impact_of_Fatigue_on_Jump_Shot_Height_and_Accuracy_Over_a_Longer_Shooting_Distance_in_Basketball" class="text-blue-600 hover:underline" target="_blank">The Impact of Fatigue on Jump Shot Height and Accuracy</a> - A study that discusses the relationship between fatigue and shot performance.</li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Use a window.onload event to ensure all elements are ready before we try to create the charts
+        window.onload = function() {
+            // Colors and chart options from your original code
+            const brilliantBlues = {
+                darkBlue: '#003F5C',
+                indigo: '#374C80',
+                purple: '#7A5195',
+                magenta: '#BC5090',
+                pink: '#EF5675',
+                orange: '#FF764A',
+                yellow: '#FFA600',
+                lightBg: '#f0f4f8',
+                textDark: '#2d3748',
+                textLight: '#4a5568'
+            };
+
+            const globalChartOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: brilliantBlues.textDark,
+                            font: {
+                                size: 14,
+                                family: 'Inter, sans-serif'
+                            }
+                        }
+                    },
+                    tooltip: {
+                        enabled: true,
+                        backgroundColor: 'rgba(0, 63, 92, 0.9)',
+                        titleFont: { size: 16, family: 'Inter, sans-serif', weight: 'bold' },
+                        bodyFont: { size: 14, family: 'Inter, sans-serif' },
+                        padding: 12,
+                        cornerRadius: 8,
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                let label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                    return label.join(' ');
+                                } else {
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#e2e8f0'
+                        },
+                        ticks: {
+                            color: brilliantBlues.textLight,
+                            font: {
+                                size: 12,
+                                family: 'Inter, sans-serif'
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: brilliantBlues.textLight,
+                            font: {
+                                size: 12,
+                                family: 'Inter, sans-serif'
+                            }
+                        }
+                    }
+                }
+            };
+            
+            function wrapLabel(str, maxWidth) {
+                if (str.length <= maxWidth) {
+                    return str;
+                }
+                const words = str.split(' ');
+                let lines = [];
+                let currentLine = '';
+                for (const word of words) {
+                    if ((currentLine + word).length > maxWidth) {
+                        lines.push(currentLine.trim());
+                        currentLine = '';
+                    }
+                    currentLine += word + ' ';
+                }
+                lines.push(currentLine.trim());
+                return lines.filter(line => line.length > 0);
+            }
+
+            // Create Fatigue Impact Chart
+            const fatigueImpactCtx = document.getElementById('fatigueImpactChart').getContext('2d');
+            const fatigueImpactData = {
+                labels: [wrapLabel('3-Point Field Goal %', 16), wrapLabel('2-Point Field Goal %', 16)],
+                datasets: [
+                    {
+                        label: 'Start of Game',
+                        data: [37, 49],
+                        backgroundColor: brilliantBlues.purple,
+                    },
+                    {
+                        label: 'End of Game',
+                        data: [34, 47],
+                        backgroundColor: brilliantBlues.orange,
+                    }
+                ]
+            };
+            new Chart(fatigueImpactCtx, {
+                type: 'bar',
+                data: fatigueImpactData,
+                options: {
+                    ...globalChartOptions,
+                    scales: {
+                        y: {
+                            ...globalChartOptions.scales.y,
+                            max: 55,
+                            title: { display: true, text: 'Percentage', color: brilliantBlues.textLight }
+                        },
+                        x: {
+                            ...globalChartOptions.scales.x,
+                        }
+                    },
+                }
+            });
+
+            // Create Quarterly Decline Chart
+            const quarterlyDeclineCtx = document.getElementById('quarterlyDeclineChart').getContext('2d');
+            const quarterlyDeclineData = {
+                labels: ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4'],
+                datasets: [{
+                    label: 'Average Field Goal %',
+                    data: [47.5, 46.8, 46.2, 45.5],
+                    fill: true,
+                    backgroundColor: 'rgba(239, 86, 117, 0.2)',
+                    borderColor: brilliantBlues.pink,
+                    tension: 0.4,
+                    pointBackgroundColor: brilliantBlues.pink,
+                    pointRadius: 5,
+                    pointHoverRadius: 8
+                }]
+            };
+            new Chart(quarterlyDeclineCtx, {
+                type: 'line',
+                data: quarterlyDeclineData,
+                options: {
+                    ...globalChartOptions,
+                    scales: {
+                        y: {
+                            ...globalChartOptions.scales.y,
+                            min: 44,
+                            max: 48,
+                            title: { display: true, text: 'Field Goal Percentage', color: brilliantBlues.textLight }
+                        },
+                        x: { ...globalChartOptions.scales.x }
+                    },
+                    plugins: { ...globalChartOptions.plugins, legend: { display: false } }
+                }
+            });
+            
+            // Create Clutch Shooting Chart
+            const clutchShootingCtx = document.getElementById('clutchShootingChart').getContext('2d');
+            const clutchShootingData = {
+                labels: [wrapLabel('Normal 3-Point %', 16), wrapLabel('Clutch Time 3-Point %', 16)],
+                datasets: [{
+                    label: 'Average 3-Point Percentage',
+                    data: [36, 33],
+                    backgroundColor: [brilliantBlues.yellow, brilliantBlues.darkBlue],
+                    borderRadius: 5
+                }]
+            };
+            new Chart(clutchShootingCtx, {
+                type: 'bar',
+                data: clutchShootingData,
+                options: {
+                    ...globalChartOptions,
+                    scales: {
+                        y: {
+                            ...globalChartOptions.scales.y,
+                            min: 30,
+                            max: 40,
+                            title: { display: true, text: 'Percentage', color: brilliantBlues.textLight }
+                        },
+                        x: {
+                            ...globalChartOptions.scales.x,
+                        }
+                    },
+                    plugins: {
+                        ...globalChartOptions.plugins,
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        };
+    </script>
+</body>
+</html>
